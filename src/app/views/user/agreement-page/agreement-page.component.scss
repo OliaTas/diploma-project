@@ -1,0 +1,43 @@
+@import "../../../../assets/styles/variables";
+
+
+.agreement-page {
+
+    .container {
+        padding: 20px;
+        font-family: Montserrat, sans-serif;
+        font-weight: 400;
+
+        .section {
+            h2 {
+                font-family: Montserrat, sans-serif;
+                font-weight: 500;
+                font-size: 20px;
+                color: $blue-text-color;
+            }
+
+            .content {
+                font-size: 16px;
+                color: $dark-text-color;
+
+                h3 {
+                    font-weight: 500;
+                    font-size: 18px;
+                    color: $blue-text-color;
+                }
+
+                p {
+                    font-weight: 400;
+                    font-size: 14px;
+                }
+
+                h4 {
+                    font-weight: 500;
+                    font-size: 16px;
+                    color: $blue-text-color;
+                }
+
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+<div class="consultation-popup">
+    <div class="popup-container">
+        <svg class="close-button" mat-dialog-close width="16" height="16" viewBox="0 0 16 16" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.93562" y1="2.6499" x2="13.9564" y2="14.6707" stroke="#BEBEBE" stroke-linecap="round" />
+            <line x1="13.9236" y1="2.62971" x2="1.90277" y2="14.6505" stroke="#BEBEBE" stroke-linecap="round" />
+        </svg>
+        <h2 mat-dialog-title>{{ data.title }}</h2>
+        
+        <form *ngIf="!isSubmitted" [formGroup]="consultationForm" (ngSubmit)="onSubmit()">
+            <div *ngIf="data.formType === 'product'">
+                <select matInput formControlName="serviceName" required
+                    [ngStyle]="{'border-color': consultationForm.get('serviceName')?.invalid 
+                    && (consultationForm.get('serviceName')?.dirty || consultationForm.get('serviceName')?.touched) ? 'red' : ''}">
+                    <option value="" disabled>Выберите услугу</option>
+                    <option *ngFor="let service of services" [value]="service">{{service}}</option>
+                </select>
+            </div>
+            
+            <div *ngIf="data.formType === 'main'">
+                <input type="text" matInput formControlName="serviceName" required 
+                    placeholder="Название услуги"
+                    [ngStyle]="{'border-color': consultationForm.get('serviceName')?.invalid 
+                    && (consultationForm.get('serviceName')?.dirty || consultationForm.get('serviceName')?.touched) ? 'red' : ''}">
+            </div>
+            
+            <div appearance="outline">
+                <input type="text" matInput formControlName="name" required placeholder="Ваше имя"
+                    [ngStyle]="{'border-color': consultationForm.get('name')?.invalid 
+                    && (consultationForm.get('name')?.dirty || consultationForm.get('name')?.touched) ? 'red' : ''}">
+            </div>
+            
+            <div appearance="outline">
+                <input type="text" matInput formControlName="phone" required placeholder="Ваш номер телефона"
+                    [ngStyle]="{'border-color': consultationForm.get('phone')?.invalid 
+                    && (consultationForm.get('phone')?.dirty || consultationForm.get('phone')?.touched) ? 'red' : ''}">
+            </div>
+            
+            <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+            </div>
+            
+            <div class="submit-button-container">
+                <button class="button" mat-raised-button type="submit" [disabled]="!consultationForm.valid">
+                    {{ data.buttonText }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

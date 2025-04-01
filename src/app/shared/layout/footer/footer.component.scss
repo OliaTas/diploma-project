@@ -1,0 +1,176 @@
+@import "../../../../assets/styles/variables";
+
+footer.footer {
+    padding: 40px 0 54px 0;
+    background-color: #B9D5FD;
+
+    .container {
+        .footer-menu {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+
+            nav {
+                margin-left: 40px;
+
+
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+
+                    li {
+                        margin-right: 20px;
+                        list-style: none;
+
+                        a {
+                            font-family: Montserrat, sans-serif;
+                            font-weight: 400;
+                            font-size: 16px;
+                            color: $dark-text-color;
+                            cursor: pointer;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .footer-info {
+            display: flex;
+            align-items: baseline;
+
+            &:first-child {
+                margin-bottom: 40px;
+            }
+
+            .footer-info-block {
+                margin-right: 60px;
+                font-size: 16px;
+
+                .footer-info-name {
+                    font-family: Montserrat, sans-serif;
+                    font-weight: 500;
+                    color: $blue-text-color;
+                    margin-bottom: 10px;
+
+                    &.info-name-last {
+                        margin-bottom: 15px;
+                    }
+                }
+
+                .footer-info-detail {
+                    font-family: Montserrat, sans-serif;
+                    font-weight: 400;
+                    color: $dark-text-color;
+                    line-height: 130%;
+                    text-decoration: none;
+
+                    &.info-detail-first {
+                        width: 253px;
+                    }
+
+                    svg {
+                        margin-right: 15px;
+                    }
+                }
+
+                .button {
+                    margin-top: 10px;
+                    width: 153px;
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .footer-rights {
+            margin-top: 6px;
+            font-size: 16px;
+            color: $blue-text-color;
+        }
+    }
+}
+
+@media screen and (max-width: 925px) {
+    footer.footer {
+        .container {
+            .footer-menu {
+                justify-content: center;
+            }
+
+            .footer-info {
+                display: grid;
+                grid-template-columns: repeat(2, 260px);
+                grid-gap: 20px;
+                justify-content: center;
+            }
+
+            .footer-rights {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 550px) {
+    footer.footer {
+        .container {
+            text-align: center;
+
+            .footer-menu {
+                display: block;
+                align-items: center;
+                nav {
+                    margin-top: 20px;
+                    justify-content: center;
+                    display: flex;
+                    align-items: center;
+                    margin-left: 0px;
+    
+                    ul {
+                        li {
+                            margin-right: 10px;
+    
+                            a {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .footer-info {
+                .footer-info-block {
+                    margin-right: 0px;
+                    font-size: 14px;
+
+                    .footer-info-detail {
+                        &.info-detail-first {
+                            width: 200px;
+                        }
+                    }
+                }
+            }
+
+            .footer-info {
+                display: grid;
+                grid-template-columns: repeat(2, 200px);
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 400px) {
+    footer.footer {
+        .container {
+            .footer-info {
+                display: grid;
+                grid-template-columns: repeat(2, 260px);
+                grid-gap: 10px;
+            }
+        }
+    }
+}

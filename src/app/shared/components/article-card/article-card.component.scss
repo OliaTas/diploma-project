@@ -1,0 +1,35 @@
+@import "../../../../assets/styles/variables";
+
+.best-article {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .best-article-image {
+        margin-bottom: 15px;
+    }
+
+    .best-article-title {
+        font-family: Montserrat, sans-serif;
+        font-weight: 500;
+        font-size: 20px;
+        color: $blue-text-color;
+        margin-bottom: 20px;
+    }
+
+    .best-article-text {
+        font-size: 14px;
+        line-height: 130%;
+        color: $dark-text-color;
+        flex-grow: 1;
+        margin-bottom: 20px;
+    }
+
+    .best-article-link {
+        font-size: 16px;
+        text-decoration: underline;
+        color: $blue-text-color;
+        margin-top: auto;
+
+    }
+}

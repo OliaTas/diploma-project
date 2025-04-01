@@ -1,0 +1,88 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins.scss";
+
+.consultation-popup {
+    height: 489px;
+    position: relative;
+
+    .popup-container {
+        padding: 94px 153px 86px 139px;
+        box-sizing: border-box;
+
+        .close-button {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        h2 {
+            @include head-lora-38;
+            margin-bottom: 20px;
+            text-align: center;
+            color: $blue-text-color;
+            line-height: 130%;
+
+        }
+
+        mat-dialog-content {
+
+            form {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+
+        .mat-input-element {
+            box-sizing: border-box;
+            border-radius: 3px;
+            border: 2px solid $blue-text-color;
+            padding: 17px 20px;
+            font-family: Montserrat, sans-serif;
+            font-weight: 400;
+            font-size: 14px;
+            color: $blue-text-color;
+            margin-bottom: 5px;
+            width: 422px;
+        }
+
+        .submit-button-container {
+            margin-top: 15px;
+
+            button {
+                min-width: 422px;
+                height: 51px;
+
+            }
+        }
+    }
+}
+
+.close-button:hover line {
+    stroke: black;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+select {
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 2px solid $blue-text-color;
+    padding: 17px 20px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: $blue-text-color;
+    margin-bottom: 5px;
+    width: 422px;
+}
