@@ -4,7 +4,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { ArticlesService } from 'src/app/shared/services/articles.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { PopularArticleType } from 'src/types/popular-article.type';
+import { ArticleType } from 'src/types/article.type';
 
 @Component({
   selector: 'app-main',
@@ -12,7 +12,8 @@ import { PopularArticleType } from 'src/types/popular-article.type';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  articles: PopularArticleType[] = [];
+  articles: ArticleType[] = [];
+  services = ['Создание сайтов', 'Продвижение', 'Реклама', 'Копирайтинг'];
 
   customOptionsReviews: OwlOptions = {
     loop: true,
@@ -71,19 +72,22 @@ export class MainComponent implements OnInit {
       class: 'one',
       title: 'Предложение месяца',
       description: 'Продвижение в Instagram для вашего бизнеса <span class="span">-15%</span> !',
-      text: ''
+      text: '',
+      service: 'Продвижение'
     },
     {
       class: 'two',
       title: 'Акция',
       description: 'Нужен грамотный <span>копирайтер</span> ?',
-      text: 'Весь декабрь у нас действует акция на работу копирайтера.'
+      text: 'Весь декабрь у нас действует акция на работу копирайтера.',
+      service: 'Копирайтинг'
     },
     {
       class: 'three',
       title: 'Новость дня',
       description: '<span>6 место</span> в ТОП-10 SMM-агенств Москвы!',
-      text: 'Мы благодарим каждого, кто голосовал за нас!'
+      text: 'Мы благодарим каждого, кто голосовал за нас!',
+      service: 'Реклама'
     }
   ];
 
@@ -142,9 +146,8 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.articlesService.getPopularArticle()
-      .subscribe((data: PopularArticleType[]) => {
+      .subscribe((data: ArticleType[]) => {
         this.articles = data;
-        console.log(this.articles)
       });
   }
 
@@ -152,12 +155,23 @@ export class MainComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  openConsultation(): void {
-    const dialogRef = this.popupService.openMainConsultation();
+  // openConsultation(): void {
+  //   const dialogRef = this.popupService.openMainConsultation();
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       console.log('Данные заявки:', result);
+  //       this.popupService.openSuccessPopup();
+  //     }
+  //   });
+  // }
+
+  openConsultation(offerIndex: number): void {
+    const selectedService = this.offers[offerIndex].service;
+    const dialogRef = this.popupService.openProductConsultation(selectedService);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Данные заявки:', result);
         this.popupService.openSuccessPopup();
       }
     });

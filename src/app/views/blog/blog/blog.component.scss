@@ -1,0 +1,196 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins.scss";
+
+.blog {
+    padding-top: 80px;
+    padding-bottom: 120px;
+
+    .container {
+
+        .blog-title {
+            @include head-lora-38;
+            color: $blue-text-color;
+            margin-bottom: 40px;
+        }
+
+        .blog-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+
+            .blog-applied-filters {
+                display: flex;
+                flex-wrap: wrap;
+
+                .blog-applied-filter {
+                    border: 1px solid #709FDC;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    color: $blue-text-color;
+                    padding: 8px 20px;
+                    display: flex;
+                    align-items: center;
+                    margin-right: 20px;
+                    margin-bottom: 20px;
+
+                    a {
+                        text-decoration: none;
+                        cursor: pointer;
+                        display: flex;
+                        margin-left: 8px;
+                    }
+                }
+            }
+
+            .blog-sorting {
+                width: 148x;
+                min-width: 148px;
+                box-sizing: border-box;
+                position: relative;
+                font-size: 16px;
+                cursor: pointer;
+
+                .blog-sorting-head {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 23px 12px 23px;
+                    justify-content: space-between;
+                    color: $dark-text-color;
+
+                    span {
+                        margin-right: 8px;
+                        width: 120px;
+                    }
+                }
+
+                .blog-sorting-body {
+                    position: absolute;
+                    box-sizing: border-box;
+                    width: 100%;
+                    z-index: 4;
+                    display: none;
+                    padding: 12px 23px;
+                    background: #FFFFFF;
+                    border-radius: 0 0 5px 5px;
+                    color: #BEBEBE;
+                    border: 2px solid #B9D5FD;
+
+                    .blog-sorting-item-block {
+                        display: flex;
+                        align-items: baseline;
+                        justify-content: space-between;
+
+                        .blog-sorting-item {
+                            margin-bottom: 19px;
+                            cursor: pointer;
+
+                            &.active {
+                                color: $dark-text-color;
+                            }
+                        }
+
+                        &:last-of-type .blog-sorting-item {
+                            margin-bottom: 0;
+                        }
+
+                    }
+                }
+
+                &.open {
+                    width: 257px;
+                    min-width: 257px;
+
+                    .blog-sorting-head {
+                        color: $dark-text-color;
+                        background: #B9D5FD;
+                        border-radius: 5px 5px 0 0;
+                    }
+
+                    .blog-sorting-body {
+                        display: block;
+                    }
+                }
+
+                svg {
+                    cursor: pointer;
+                    transition: transform 0.3s ease;
+                  }
+                
+                  &.open svg {
+                    transform: rotate(180deg);  // Стрелка будет поворачиваться при открытии
+                  }
+            }
+
+
+        }
+
+        .blog-layout {
+            margin-top: 20px;
+            display: flex;
+
+            .blog-articles {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 40px 24px;
+            }
+        }
+
+        .pagination {
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .pagination-arrow {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &.disabled {
+                    pointer-events: none;
+                    cursor: default;
+                }
+            }
+
+            .pagination-pages {
+                margin-left: 40px;
+                margin-right: 40px;
+                display: flex;
+                align-items: center;
+
+                a.pagination-page {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    width: 32px;
+                    height: 46px;
+                    margin-right: 20px;
+                    cursor: pointer;
+                    font-size: 20px;
+                    color: $dark-text-color;
+
+                    &.active {
+                        color: $blue-text-color;
+
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+
+
+.no-products-message {
+    width: 625px;
+    font-size: 18px;
+    color: $dark-text-color;
+    margin-top: 20px;
+}

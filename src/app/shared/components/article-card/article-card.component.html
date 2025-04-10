@@ -1,6 +1,10 @@
 <div class="best-article" *ngIf="article">
-    <img [src]="article.image" [alt]="article.title" class="best-article-image">
+    <div class="best-article-block">
+        <img class="best-article-image" [style.background-image]="'url(' + (serverStaticPath + article.image) + ')'">
+        <button class="button">{{article.category}}</button>
+    </div>
+
     <div class="best-article-title">{{article.title}}</div>
     <div class="best-article-text">{{article.description}}</div>
-    <a [routerLink]="'/article/top/' + article.url" class="best-article-link">Читать дальше</a>
+    <a [routerLink]="'/articles/' + article.url" class="best-article-link">Читать дальше</a>
 </div>

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopupService } from '../../services/popup.service';
 
 @Component({
-  selector: 'app-footer',
+  selector: 'footer-component',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })

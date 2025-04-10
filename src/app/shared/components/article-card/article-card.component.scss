@@ -5,11 +5,38 @@
     flex-direction: column;
     height: 100%;
 
-    .best-article-image {
-        margin-bottom: 15px;
+    .best-article-block {
+        position: relative;
+
+        .best-article-image {
+            margin-bottom: 15px;
+            border-radius: 5px;
+            width: 291px;
+            height: 291px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        button {
+            position: absolute;
+            padding: 10px 0;
+            top: 10px;
+            right: 10px;
+            width: 89px;
+            height: 34px;
+            background-color: #FFFFFF;
+            font-size: 11px;
+            color: $blue-text-color;
+            z-index: 3;
+        }
+
     }
 
+
+
     .best-article-title {
+        width: 291px;
         font-family: Montserrat, sans-serif;
         font-weight: 500;
         font-size: 20px;
@@ -18,6 +45,7 @@
     }
 
     .best-article-text {
+        width: 291px;
         font-size: 14px;
         line-height: 130%;
         color: $dark-text-color;
@@ -30,6 +58,6 @@
         text-decoration: underline;
         color: $blue-text-color;
         margin-top: auto;
-
+        cursor: pointer;
     }
 }

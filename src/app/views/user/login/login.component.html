@@ -4,16 +4,32 @@
             <div class="auth-title">Войти в личный кабинет</div>
             <div class="auth-inputs">
                 <div class="auth-input">
-                    <input type="text" class="input"
-                    [ngStyle]="{'border-color': loginForm.get('email')?.invalid 
+                    <input type="text" class="input" [ngStyle]="{'border-color': loginForm.get('email')?.invalid 
                     && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched) ? 'red' : ''}"
-                    placeholder="Электронная почта" formControlName="email">
+                        placeholder="Электронная почта" formControlName="email">
+                    <div *ngIf="loginForm.get('email')?.invalid 
+                    && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)" class="validation-error">
+                        <span *ngIf="loginForm.get('email')?.errors?.['required']">
+                            Поле обязательно для заполнения
+                        </span>
+                        <span
+                            *ngIf="loginForm.get('email')?.errors?.['email'] && !loginForm.get('email')?.errors?.['required']">
+                            Введите корректный email
+                        </span>
+                    </div>
+
                 </div>
                 <div class="auth-input">
-                    <input type="password" class="input"
-                    [ngStyle]="{'border-color': loginForm.get('password')?.invalid 
+                    <input type="password" class="input" [ngStyle]="{'border-color': loginForm.get('password')?.invalid 
                     && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched) ? 'red' : ''}"
-                     placeholder="Пароль" formControlName="password">
+                        placeholder="Пароль" formControlName="password">
+                    <div *ngIf="loginForm.get('password')?.invalid 
+                          && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+                        class="validation-error">
+                        <span *ngIf="loginForm.get('password')?.errors?.['required']">
+                            Поле обязательно для заполнения
+                        </span>
+                    </div>
                 </div>
 
                 <div class="auth-checkbox">

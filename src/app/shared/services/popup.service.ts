@@ -35,7 +35,8 @@ export class PopupService {
       data: { 
         title: 'Заявка на услугу',
         formType: 'main',
-        buttonText: 'Оставить заявку'
+        buttonText: 'Оставить заявку',
+        
       },
       disableClose: true
     });

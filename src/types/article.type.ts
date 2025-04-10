@@ -1,4 +1,7 @@
-export type PopularArticleType = {
+export type ArticleType = {
+    text?: string,
+    comments?: [],
+    commentsCount?: number,
     id: string,
     title: string,
     description: string,

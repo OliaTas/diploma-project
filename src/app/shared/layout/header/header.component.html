@@ -7,19 +7,19 @@
             <nav>
                 <ul>
                     <li [class.active]="activeLink === 'products'">
-                        <a routerLink="/" fragment="products" (click)="setActive('products')">Услуги</a>
+                        <a routerLink="/" fragment="products">Услуги</a>
                     </li>
                     <li [class.active]="activeLink === 'about'">
-                        <a routerLink="/" fragment="about" (click)="setActive('about')">О нас</a>
+                        <a routerLink="/" fragment="about">О нас</a>
                     </li>
                     <li [class.active]="activeLink === 'articles'">
-                        <a routerLink="/" fragment="articles" (click)="setActive('articles')">Статьи</a>
+                        <a routerLink="/articles" fragment="articles">Статьи</a>
                     </li>
                     <li [class.active]="activeLink === 'reviews'">
-                        <a routerLink="/" fragment="reviews" (click)="setActive('reviews')">Отзывы</a>
+                        <a routerLink="/" fragment="reviews">Отзывы</a>
                     </li>
                     <li [class.active]="activeLink === 'contacts'">
-                        <a routerLink="/" fragment="contacts" (click)="setActive('contacts')">Контакты</a>
+                        <a routerLink="/" fragment="contacts">Контакты</a>
                     </li>
                 </ul>
             </nav>

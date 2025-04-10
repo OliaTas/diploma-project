@@ -66,27 +66,32 @@ export class AuthService {
     localStorage.setItem(this.refreshTokenKey, refreshToken);
     if (userName) {
       localStorage.setItem(this.userNameKey, userName);
+      console.log(userName)
     }
     this.isLogged = true;
     this.isLogged$.next(true);
   }
 
-  get userName(): string | null {
-    return localStorage.getItem(this.userNameKey);
+  getUserName(): string | null {
+    return localStorage.getItem('userName');
   }
 
-  set userName(name: string | null) {
-    if (name) {
-      localStorage.setItem(this.userNameKey, name);
-    } else {
-      localStorage.removeItem(this.userNameKey);
-    }
-  }
+  // get userName(): string | null {
+  //   return localStorage.getItem(this.userNameKey);
+  // }
+
+  // set userName(name: string | null) {
+  //   if (name) {
+  //     localStorage.setItem(this.userNameKey, name);
+  //   } else {
+  //     localStorage.removeItem(this.userNameKey);
+  //   }
+  // }
 
   public removeTokens(): void {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.refreshTokenKey);
-    localStorage.removeItem(this.userNameKey);
+    localStorage.removeItem('userName');
     this.isLogged = false;
     this.isLogged$.next(false);
   }

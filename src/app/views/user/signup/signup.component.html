@@ -7,16 +7,49 @@
                     <input type="text" class="input" [ngStyle]="{'border-color': signupForm.get('name')?.invalid 
                     && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched) ? 'red' : ''}"
                         placeholder="Ваше имя" formControlName="name">
+                    <div *ngIf="signupForm.get('name')?.invalid 
+                        && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched)"
+                        class="validation-error">
+                        <span *ngIf="signupForm.get('name')?.errors?.['required']">
+                            Поле обязательно для заполнения
+                        </span>
+                        <span
+                            *ngIf="signupForm.get('name')?.errors?.['pattern'] && !signupForm.get('name')?.errors?.['required']">
+                            Введите корректное имя (начинается с заглавной буквы)
+                        </span>
+                    </div>
                 </div>
                 <div class="auth-input">
                     <input type="text" class="input" [ngStyle]="{'border-color': signupForm.get('email')?.invalid 
                     && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched) ? 'red' : ''}"
                         placeholder="Электронная почта" formControlName="email">
+                    <div *ngIf="signupForm.get('email')?.invalid 
+                          && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)"
+                        class="validation-error">
+                        <span *ngIf="signupForm.get('email')?.errors?.['required']">
+                            Поле обязательно для заполнения
+                        </span>
+                        <span
+                            *ngIf="signupForm.get('email')?.errors?.['email'] && !signupForm.get('email')?.errors?.['required']">
+                            Введите корректный email
+                        </span>
+                    </div>
                 </div>
                 <div class="auth-input">
                     <input type="password" class="input" [ngStyle]="{'border-color': signupForm.get('password')?.invalid 
                     && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched) ? 'red' : ''}"
                         placeholder="Пароль" formControlName="password">
+                    <div *ngIf="signupForm.get('password')?.invalid 
+                          && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)"
+                        class="validation-error">
+                        <span *ngIf="signupForm.get('password')?.errors?.['required']">
+                            Поле обязательно для заполнения
+                        </span>
+                        <span
+                            *ngIf="signupForm.get('password')?.errors?.['pattern'] && !signupForm.get('password')?.errors?.['required']">
+                            Пароль должен содержать минимум 8 символов, включая цифры, строчные и заглавные буквы
+                        </span>
+                    </div>
                 </div>
                 <div class="auth-checkbox">
                     <input type="checkbox" id="agree" formControlName="agree">

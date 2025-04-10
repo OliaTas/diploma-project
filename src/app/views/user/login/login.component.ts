@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
             }
 
             const loginResponse = data as LoginResponseType;
-            if (!loginResponse.accessToken || !loginResponse.refreshToken || !loginResponse.userId) {
+            if (!loginResponse.accessToken || !loginResponse.refreshToken) {
               error = 'Ошибка авторизации';
             }
 

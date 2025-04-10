@@ -7,7 +7,7 @@ import { UserType } from 'src/types/user.type';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-header',
+  selector: 'header-component',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -16,9 +16,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   userName: string | null = null;
   activeLink: string = '';
 
-  private burgerMenu!: HTMLElement | null;
-  private sidebar!: HTMLElement | null;
-  private closeBtn!: HTMLElement | null;
+  private burgerMenu: HTMLElement | null = null;
+  private sidebar: HTMLElement | null = null;
+  private closeBtn: HTMLElement | null = null;
 
   constructor(private authService: AuthService, private _snackBar: MatSnackBar,
     private router: Router, private renderer: Renderer2, private el: ElementRef, private userService: UserService) {
@@ -29,23 +29,21 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.authService.isLogged$.subscribe((isLoggedIn: boolean) => {
       this.isLogged = isLoggedIn;
       if (isLoggedIn) {
-        this.userName = this.authService.userName;
-    } else {
-        this.userName = null;
-    }
+        this.updateUserName();
+      }
     });
-
-    if (this.isLogged) {
-      this.userName = this.authService.userName;
-  }
-
-
-
     this.detectActiveLink();
 
     this.router.events.subscribe(() => {
       this.detectActiveLink();
     });
+  }
+
+  updateUserName(): void {
+    const storedName = this.authService.getUserName(); 
+    if (storedName) {
+      this.userName = storedName;
+    }
   }
 
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PopularArticleType } from 'src/types/popular-article.type';
+import { environment } from 'src/environments/environment';
+import { ArticleType } from 'src/types/article.type';
 
 @Component({
   selector: 'article-card',
@@ -7,7 +8,8 @@ import { PopularArticleType } from 'src/types/popular-article.type';
   styleUrls: ['./article-card.component.scss']
 })
 export class ArticleCardComponent implements OnInit {
-  @Input() article!: PopularArticleType;
+  @Input() article!: ArticleType;
+  serverStaticPath = environment.serverStaticPath;
 
   constructor() { }
 

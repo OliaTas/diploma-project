@@ -2,10 +2,29 @@
 
 html,
 body {
+    height: 100%;
     margin: 0;
     padding: 0;
     font-family: Montserrat, sans-serif;
     font-weight: 400;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+router-outlet+* {
+    flex: 1;
+}
+
+footer-component {
+    margin-top: auto;
+}
+
+footer-component footer {
+    margin-top: auto;
 }
 
 .container {
