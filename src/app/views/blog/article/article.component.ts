@@ -48,7 +48,7 @@ export class ArticleComponent implements OnInit {
         .subscribe((data: ArticleType) => {
           this.article = data;
           this.articleHtml = this.sanitizer.bypassSecurityTrustHtml(data.text || '');
-          this.commentsOffset = 3;
+          // this.commentsOffset = 3;
           this.loadComments();
         });
 
@@ -88,9 +88,8 @@ export class ArticleComponent implements OnInit {
           if (response.error) {
             throw new Error(response.message);
           }
- 
-          this.newCommentText = '';
 
+          this.newCommentText = '';
           this.commentsOffset = 0;
           this.loadComments();
         },
@@ -110,7 +109,7 @@ export class ArticleComponent implements OnInit {
       return;
     }
 
-    this.commentsOffset += 10; 
+    this.commentsOffset += 10;
     this.loadComments();
   }
 

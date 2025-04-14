@@ -12,7 +12,7 @@ export class CommentsService {
 
   constructor(private http: HttpClient) { }
 
-  getComments(articleId: string, offset: number = 0,): Observable<CommentType> {
+  getComments(articleId: string, offset: number,): Observable<CommentType> {
     const params = new HttpParams()
       .set('article', articleId)
       .set('offset', offset.toString());
@@ -21,29 +21,12 @@ export class CommentsService {
   }
 
   addComment(articleId: string, text: string): Observable<DefaultResponseType> {
-    const token = localStorage.getItem('accessToken');
-
-    if (!token) {
-      return throwError(() => new Error('User is not authenticated'));
-    }
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.post<DefaultResponseType>(
-      environment.api + 'comments',
+    return this.http.post<DefaultResponseType>(environment.api + 'comments',
       {
         article: articleId,
         text: text
       },
-      { headers }
-    ).pipe(
-      catchError(error => {
-        console.error('Error adding comment:', error);
-        return throwError(() => new Error('Failed to add comment'));
-      })
-    );
+    )
   }
 
 

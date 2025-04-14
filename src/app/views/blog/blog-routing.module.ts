@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'articles', component: BlogComponent },
   { path: 'articles/:url', component: ArticleComponent },
 
+
 ];
 
 @NgModule({

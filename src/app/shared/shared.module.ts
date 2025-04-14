@@ -10,12 +10,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CategoryComponent } from './components/category/category.component';
+import { CommentsComponent } from './components/comments/comments.component';
 
 
 
 @NgModule({
-  declarations: [ArticleCardComponent, PopupComponent, SuccessPopupComponent, CategoryComponent],
+  declarations: [ArticleCardComponent, PopupComponent, SuccessPopupComponent, CommentsComponent],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -26,7 +26,7 @@ import { CategoryComponent } from './components/category/category.component';
     MatIconModule,
     RouterModule,
   ],
-  exports: [ArticleCardComponent, PopupComponent, SuccessPopupComponent],
+  exports: [ArticleCardComponent, PopupComponent, SuccessPopupComponent, CommentsComponent],
   entryComponents: [
     PopupComponent, SuccessPopupComponent,
   ]

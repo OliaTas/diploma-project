@@ -30,8 +30,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.isLogged = isLoggedIn;
       if (isLoggedIn) {
         this.updateUserName();
+      } else {
+        this.userName = null;
       }
     });
+
+    if (this.isLogged && !this.userName) {
+      this.updateUserName();
+    }
+
     this.detectActiveLink();
 
     this.router.events.subscribe(() => {
@@ -40,12 +47,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   updateUserName(): void {
-    const storedName = this.authService.getUserName(); 
-    if (storedName) {
-      this.userName = storedName;
-    }
+    this.userService.getUserInfo()
+      .subscribe((data: UserType | DefaultResponseType) => {
+        if ((data as DefaultResponseType).error !== undefined) {
+          throw new Error((data as DefaultResponseType).message);
+        }
+        this.userName = (data as UserType).name;
+        console.log(this.userName)
+      })
   }
-
 
   setActive(link: string): void {
     this.activeLink = link;

@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
               throw new Error(error);
             }
 
-            this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken, loginResponse.name);
+            this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
             this.authService.userId = loginResponse.userId;
             this._snackBar.open('Вы успешно авторизовались');
             this.router.navigate(['/']);

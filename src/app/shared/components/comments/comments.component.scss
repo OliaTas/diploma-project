@@ -1,0 +1,56 @@
+@import "../../../../assets/styles/variables";
+
+
+.article-comments-item {
+    margin-bottom: 40px;
+
+    .article-comments-item-info {
+        display: flex;
+
+        .article-comments-circle {
+            border-radius: 50%;
+            border: 2px solid $blue-text-color;
+            background-color: #B9D5FD;
+        }
+
+        .article-comments-item-text {
+            margin-left: 26px;
+
+            .article-comments-item-name {
+                font-family: Montserrat, sans-serif;
+                font-weight: 600;
+                font-size: 18px;
+                color: $blue-text-color;
+                margin-bottom: 10px;
+            }
+
+            .article-comments-item-date {
+                font-family: Montserrat, sans-serif;
+                font-weight: 600;
+                font-size: 14px;
+                color: #BEBEBE;
+            }
+        }
+    }
+
+    .article-comments-item-comment {
+        width: 854px;
+        font-family: Montserrat, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 140%;
+        margin-bottom: 39px;
+        margin-top: 15px;
+    }
+
+    .article-comments-item-grade {
+        display: flex;
+        align-items: center;
+
+        .article-comments-item-like-svg {
+            margin-left: 2px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+    }
+}

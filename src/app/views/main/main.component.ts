@@ -20,7 +20,6 @@ export class MainComponent implements OnInit {
     mouseDrag: false,
     touchDrag: false,
     pullDrag: false,
-    margin: 26,
     dots: false,
     navSpeed: 700,
     navText: ['', ''],
@@ -28,10 +27,10 @@ export class MainComponent implements OnInit {
       0: {
         items: 1
       },
-      400: {
+      800: {
         items: 2
       },
-      740: {
+      1200: {
         items: 3
       }
     },

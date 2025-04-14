@@ -13,7 +13,6 @@ export class AuthService {
   public accessTokenKey: string = 'accessToken';
   private refreshTokenKey: string = 'refreshToken';
   private userIdKey: string = 'userId';
-  private userNameKey: string = 'userName';
 
   public isLogged$: Subject<boolean> = new Subject<boolean>();
   private isLogged = false;
@@ -61,37 +60,16 @@ export class AuthService {
   }
 
 
-  public setTokens(accessToken: string, refreshToken: string, userName?: string | null): void {
+  public setTokens(accessToken: string, refreshToken: string): void {
     localStorage.setItem(this.accessTokenKey, accessToken);
     localStorage.setItem(this.refreshTokenKey, refreshToken);
-    if (userName) {
-      localStorage.setItem(this.userNameKey, userName);
-      console.log(userName)
-    }
     this.isLogged = true;
     this.isLogged$.next(true);
   }
 
-  getUserName(): string | null {
-    return localStorage.getItem('userName');
-  }
-
-  // get userName(): string | null {
-  //   return localStorage.getItem(this.userNameKey);
-  // }
-
-  // set userName(name: string | null) {
-  //   if (name) {
-  //     localStorage.setItem(this.userNameKey, name);
-  //   } else {
-  //     localStorage.removeItem(this.userNameKey);
-  //   }
-  // }
-
   public removeTokens(): void {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.refreshTokenKey);
-    localStorage.removeItem('userName');
     this.isLogged = false;
     this.isLogged$.next(false);
   }
@@ -102,7 +80,7 @@ export class AuthService {
       refreshToken: localStorage.getItem(this.refreshTokenKey)
     };
   }
-
+ 
   get userId(): null | string {
     return localStorage.getItem(this.userIdKey);
   }

@@ -1,4 +1,4 @@
-@import "../../../../../frontend/src/assets/styles/variables";
+@import "../../../assets/styles/variables";
 @import "../../../assets/styles/mixins.scss";
 
 .main-offer {
@@ -8,6 +8,7 @@
         swiper {
             width: 100%;
             padding: 0 40px;
+            overflow: hide;
         }
 
         .swiper-slide {
@@ -486,4 +487,177 @@
         }
     }
 
+}
+
+
+/* Адаптивные стили  */
+
+@media screen and (max-width: 1190px) {
+
+    .main-offer {
+        .container {
+            padding: 10px;
+
+            .swiper-slide {
+                .offer {
+                    .offer-details {
+                        .offer-title {}
+
+                        .offer-description {}
+
+                        .offer-text {}
+                    }
+                }
+            }
+
+        }
+    }
+
+    .main-products {
+        .container {
+            padding: 10px;
+
+            .products {
+                display: grid;
+                grid-template-columns: repeat(3, 290px);
+                grid-gap: 70px;
+            }
+        }
+    }
+
+    .main-best-articles {
+        .container {
+            padding: 10px;
+
+            .best-articles {
+                display: grid;
+                grid-template-columns: repeat(3, 292px);
+                gap: 50px;
+            }
+        }
+    }
+
+    .main-about {
+        margin-bottom: 120px;
+
+        .container {
+            padding: 10px;
+
+            .about {
+                display: block;
+                box-sizing: border-box;
+
+
+                img {
+                    display: none;
+                }
+
+                .about-info {
+                    margin-left: 0;
+
+                    .about-info-text {
+                        width: 900px;
+                    }
+                }
+            }
+        }
+    }
+
+    .main-reviews {
+        .container {
+            padding: 10px;
+
+            .reviews-carousel {
+                margin-left: 30px;
+
+                .reviews-arrows {
+                    a {
+                        &.move-backward {
+                            left: -18px;
+                        }
+
+                        &.move-forward {
+                            right: 98px;
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+@media screen and (max-width: 1000px) {
+
+    .main-products {
+        .container {
+            .products-title {
+                text-align: center;
+            }
+            .products {
+                display: grid;
+                grid-template-columns: repeat(2, 290px);
+                justify-content: center;
+            }
+        }
+    }
+
+    .main-best-articles {
+        .container {
+            .best-articles {
+                display: grid;
+                grid-template-columns: repeat(2, 292px);
+            }
+        }
+    }
+
+    .main-about {
+        .container {
+            .about {
+                .about-info {
+                    .about-info-text {
+                        width: 800px;
+                    }
+                }
+            }
+        }
+    }
+
+    .main-reviews {
+        .container {
+            .reviews-carousel {
+                margin-left: 30px;
+
+                .reviews-arrows {
+                    a {
+                        &.move-backward {
+                            left: -18px;
+                        }
+
+                        &.move-forward {
+                            right: 98px;
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .main-offer {
+        .container .swiper-slide {
+            .offer {
+                .offer-details {
+                    .offer-title {}
+
+                    .offer-description {}
+
+                    .offer-text {}
+                }
+            }
+        }
+
+    }
 }

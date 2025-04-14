@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-    getUserInfo(): Observable<DefaultResponseType | UserType> {
-      return this.http.get<DefaultResponseType | UserType>(environment.api + 'users', { withCredentials: true });
+    getUserInfo(): Observable<UserType | DefaultResponseType> {
+      return this.http.get<UserType | DefaultResponseType>(environment.api + 'users');
     }
 }
