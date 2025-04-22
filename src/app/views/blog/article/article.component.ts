@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { ArticlesService } from 'src/app/shared/services/articles.service';
 import { CommentsService } from 'src/app/shared/services/comments.service';
 import { environment } from 'src/environments/environment';
@@ -23,7 +23,7 @@ export class ArticleComponent implements OnInit {
   isLogged: boolean = false;
 
   comments: CommentType | null = null;
-  commentsOffset = 0;
+  commentsOffset = 3;
   allCommentsCount = 0;
 
   newCommentText: string = '';
@@ -66,6 +66,9 @@ export class ArticleComponent implements OnInit {
     this.commentsService.getComments(this.article.id, this.commentsOffset)
       .subscribe({
         next: (data: CommentType) => {
+          if (this.comments && this.commentsOffset > 0) {
+            data.comments = [...this.comments.comments, ...data.comments];
+          }
           this.comments = data;
           this.allCommentsCount = data.allCount;
         },
@@ -90,7 +93,6 @@ export class ArticleComponent implements OnInit {
           }
 
           this.newCommentText = '';
-          this.commentsOffset = 0;
           this.loadComments();
         },
         error: (error) => {
@@ -105,10 +107,6 @@ export class ArticleComponent implements OnInit {
   }
 
   loadMoreComments(): void {
-    if (!this.comments || this.comments.comments.length >= this.allCommentsCount) {
-      return;
-    }
-
     this.commentsOffset += 10;
     this.loadComments();
   }

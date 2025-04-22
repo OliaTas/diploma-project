@@ -47,10 +47,59 @@
         display: flex;
         align-items: center;
 
-        .article-comments-item-like-svg {
-            margin-left: 2px;
+        .article-comments-item-like {
+            color: #071739;
+            font-family: Montserrat, sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+
+            &.active {
+                color: #709FDC;
+            }
+        }
+
+        // .article-comments-item-like-svg {
+        //     margin-left: 2px;
+        //     margin-right: 15px;
+        //     cursor: pointer;
+        //     stroke: #071739;
+
+        //     &.active {
+        //         stroke: #709FDC;
+        //     }
+        // }
+
+        // .article-comments-item-Slike-svg {
+        //     margin-left: 2px;
+        //     margin-right: 15px;
+        //     cursor: pointer;
+        //     stroke: #071739;
+        //     transition: stroke 0.2s ease;
+
+        //     &.active {
+        //         stroke: #709FDC;
+        //     }
+        // }
+
+        .article-comments-item-like-svg,
+        .article-comments-item-Slike-svg {
+            cursor: pointer;
             margin-right: 15px;
+            
+            svg path {
+                stroke: #071739;
+                transition: stroke 0.2s ease;
+            }
+            
+            &.active svg path {
+                stroke: #709FDC;
+            }
+        }
+
+        .article-comments-item-report {
             cursor: pointer;
         }
+
+
     }
 }

@@ -11,11 +11,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommentsComponent } from './components/comments/comments.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 
 @NgModule({
-  declarations: [ArticleCardComponent, PopupComponent, SuccessPopupComponent, CommentsComponent],
+  declarations: [ArticleCardComponent, PopupComponent, SuccessPopupComponent, CommentsComponent, LoaderComponent],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -26,7 +27,7 @@ import { CommentsComponent } from './components/comments/comments.component';
     MatIconModule,
     RouterModule,
   ],
-  exports: [ArticleCardComponent, PopupComponent, SuccessPopupComponent, CommentsComponent],
+  exports: [ArticleCardComponent, PopupComponent, SuccessPopupComponent, CommentsComponent, LoaderComponent],
   entryComponents: [
     PopupComponent, SuccessPopupComponent,
   ]

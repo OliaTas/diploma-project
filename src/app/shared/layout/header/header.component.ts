@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
 import { DefaultResponseType } from 'src/types/default-response.type';
 import { UserType } from 'src/types/user.type';
 import { UserService } from '../../services/user.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'header-component',

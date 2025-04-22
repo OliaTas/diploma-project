@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,16 +12,20 @@ export class ActionsService {
 
   constructor(private http: HttpClient) { }
 
-  getActions(id: string): Observable<ActionType[] | DefaultResponseType> {
-    return this.http.get<ActionType[] | DefaultResponseType>(environment.api + 'comments/' + id + '/actions');
+  getCommentActions(commentId: string): Observable<ActionType[]> {
+    return this.http.get<ActionType[]>(environment.api + 'comments/' + commentId + '/actions');
   }
 
   getArticleCommentActions(articleId: string): Observable<ActionType[]> {
-    return this.http.get<ActionType[]>(environment.api + 'comments/' + articleId + 'article-comment-actions');
+    return this.http.get<ActionType[]>(environment.api + 'comments/' + articleId + 'article-comment-actions',
+      {
+        params: new HttpParams().set('articleId', articleId)
+      }
+    );
   }
 
-  applyAction(commentId: string, action: 'like' | 'dislike' | 'violate'): Observable<ActionType | DefaultResponseType> {
-    return this.http.post<ActionType | DefaultResponseType>(
+  applyActionComment(commentId: string, action: 'like' | 'dislike' | 'violate'): Observable< DefaultResponseType> {
+    return this.http.post<DefaultResponseType>(
       environment.api + 'comments/' + commentId + '/apply-action',
       { action }
     );

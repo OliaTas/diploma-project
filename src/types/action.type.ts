@@ -1,4 +1,5 @@
 export type ActionType = {
     comment: string;
-    action: string
+    action: 'like' | 'dislike' ;
+    user?: string;
 }

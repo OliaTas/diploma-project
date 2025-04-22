@@ -14,7 +14,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SharedModule } from './shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
