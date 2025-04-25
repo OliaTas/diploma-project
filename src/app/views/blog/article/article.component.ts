@@ -23,8 +23,10 @@ export class ArticleComponent implements OnInit {
   isLogged: boolean = false;
 
   comments: CommentType | null = null;
-  commentsOffset = 3;
+  commentsOffset  = 0;
   allCommentsCount = 0;
+  loadingComments = false;
+  initialLoadDone = false;
 
   newCommentText: string = '';
   postingComment: boolean = false;
@@ -48,7 +50,7 @@ export class ArticleComponent implements OnInit {
         .subscribe((data: ArticleType) => {
           this.article = data;
           this.articleHtml = this.sanitizer.bypassSecurityTrustHtml(data.text || '');
-          // this.commentsOffset = 3;
+          this.commentsOffset = 0;
           this.loadComments();
         });
 
@@ -61,25 +63,36 @@ export class ArticleComponent implements OnInit {
   }
 
   loadComments(): void {
-    if (!this.article?.id) return;
+    if (!this.article?.id || this.loadingComments) return;
 
-    this.commentsService.getComments(this.article.id, this.commentsOffset)
+    this.loadingComments = true;
+
+    const offset = this.initialLoadDone ? this.commentsOffset : 0;
+
+    this.commentsService.getComments(this.article.id, offset)
       .subscribe({
         next: (data: CommentType) => {
-          if (this.comments && this.commentsOffset > 0) {
+          if (!this.initialLoadDone) {
+
+            this.initialLoadDone = true;
+            this.commentsOffset = 3;
+          } else if (this.comments) {
+
             data.comments = [...this.comments.comments, ...data.comments];
           }
           this.comments = data;
           this.allCommentsCount = data.allCount;
+          this.loadingComments = false;
         },
         error: (error) => {
           console.error('Ошибка при загрузке комментариев:', error);
+          this.loadingComments = false;
         }
       });
   }
 
   addNewComment(): void {
-    if (!this.isLogged || !this.article?.id || !this.newCommentText.trim()) {
+    if (!this.isLogged || !this.article?.id || !this.newCommentText.trim() || this.postingComment) {
       return;
     };
 
@@ -92,7 +105,9 @@ export class ArticleComponent implements OnInit {
             throw new Error(response.message);
           }
 
+          this.initialLoadDone = false;
           this.newCommentText = '';
+          this.commentsOffset = 0;
           this.loadComments();
         },
         error: (error) => {
@@ -107,7 +122,11 @@ export class ArticleComponent implements OnInit {
   }
 
   loadMoreComments(): void {
-    this.commentsOffset += 10;
+    if (this.commentsOffset === undefined) {
+      this.commentsOffset = 3; 
+    } else {
+      this.commentsOffset += 10; 
+    }
     this.loadComments();
   }
 

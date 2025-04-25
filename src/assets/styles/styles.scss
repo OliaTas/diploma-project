@@ -2,5 +2,7 @@
 @import "_fonts";
 @import "_global";
 
-
+html {
+    scroll-behavior: smooth;
+  }
 // html, body { height: 100%; }

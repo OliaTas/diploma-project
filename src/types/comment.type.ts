@@ -1,3 +1,5 @@
+import { ActionType } from "./action.type";
+
 export type CommentType = {
     allCount: number;
     comments: {
@@ -9,6 +11,7 @@ export type CommentType = {
       user: {
         id: string;
         name: string;
-      }
+      },
+      actions: ActionType,
     }[];
 }

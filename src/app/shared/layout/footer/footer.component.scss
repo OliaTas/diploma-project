@@ -162,6 +162,11 @@ footer.footer {
     }
 }
 
+@media screen and (max-width: 992px) {
+    header.header {
+        padding: 40px 10px 40px 10px;
+    }
+}
 
 @media screen and (max-width: 400px) {
     footer.footer {

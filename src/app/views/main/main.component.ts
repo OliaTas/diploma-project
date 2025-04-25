@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';

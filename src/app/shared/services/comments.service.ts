@@ -12,7 +12,7 @@ export class CommentsService {
 
   constructor(private http: HttpClient) { }
 
-  getComments(articleId: string, offset: number): Observable<CommentType> {
+  getComments(articleId: string, offset: number = 0): Observable<CommentType> {
     const params = new HttpParams()
       .set('article', articleId)
       .set('offset', offset.toString())

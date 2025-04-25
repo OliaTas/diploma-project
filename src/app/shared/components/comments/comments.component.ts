@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommentType } from 'src/types/comment.type';
 import { ActionsService } from '../../services/actions.service';
 import { Subscription } from 'rxjs';
-import { ActionType } from 'src/types/action.type';
+import { Actions, ActionType } from 'src/types/action.type';
 import { DefaultResponseType } from 'src/types/default-response.type';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/core/auth/auth.service';
@@ -13,11 +13,12 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   styleUrls: ['./comments.component.scss']
 })
 
-export class CommentsComponent implements OnInit {
+export class CommentsComponent implements OnInit, OnDestroy {
   @Input() comments: CommentType | null = null;
   @Input() allCommentsCount: number = 0;
   @Input() articleId: string | null = null;
-  userActions: { [commentId: string]: 'like' | 'dislike' } = {};
+  userActions: { [commentId: string]: Actions } = {};
+  readonly actionTypes = Actions;
 
   private subscription: Subscription = new Subscription();
 
@@ -28,39 +29,32 @@ export class CommentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.authService.getLoggedIn() && this.comments?.comments) {
+    if (this.authService.getLoggedIn() && this.articleId) {
       this.loadUserActions();
     }
   }
 
   private loadUserActions(): void {
-    if (!this.comments?.comments) return;
-
-    this.comments.comments.forEach(comment => {
-      this.subscription.add(
-        this.actionsService.getArticleCommentActions(comment.id)
-          .subscribe({
-            next: (actions: ActionType[]) => {
-              for (const action of actions) {
-                if (action.action === 'like' || action.action === 'dislike') {
-                  this.userActions[comment.id] = action.action;
-                  break;
-                }
-              }
-            },
-            error: () => {
-              console.error('Ошибка при загрузке действий для комментария', comment.id);
-            }
-          })
-      );
-    });
+    this.subscription.add(
+      this.actionsService.getArticleCommentActions(this.articleId!)
+        .subscribe({
+          next: (actions: ActionType[]) => {
+            actions.forEach(action => {
+              this.userActions[action.comment] = action.action;
+            });
+          },
+          error: (error) => {
+            console.error('Error loading user actions:', error);
+          }
+        })
+    );
   }
 
-  hasUserAction(commentId: string, actionType: 'like' | 'dislike'): boolean {
+  hasUserAction(commentId: string, actionType: Actions.LIKE | Actions.DISLIKE): boolean {
     return this.userActions[commentId] === actionType;
   }
 
-  applyAction(commentId: string, action: 'like' | 'dislike'): void {
+  applyAction(commentId: string, action: Actions.LIKE | Actions.DISLIKE): void {
     if (!this.authService.getLoggedIn()) {
       this._snackBar.open('Для выполнения действия необходимо авторизоваться');
       return;
@@ -94,7 +88,7 @@ export class CommentsComponent implements OnInit {
     }
 
     this.subscription.add(
-      this.actionsService.applyActionComment(commentId, 'violate')
+      this.actionsService.applyActionComment(commentId, Actions.VIOLATE)
         .subscribe({
           next: (result) => {
             if ((result as DefaultResponseType).error) {
@@ -114,24 +108,21 @@ export class CommentsComponent implements OnInit {
     );
   }
 
-  private updateCommentCounts(commentId: string, action: 'like' | 'dislike'): void {
+  private updateCommentCounts(commentId: string, action: Actions.LIKE | Actions.DISLIKE): void {
     if (!this.comments?.comments) return;
 
     const comment = this.comments.comments.find(c => c.id === commentId);
     if (!comment) return;
 
+    if (this.userActions[commentId] === Actions.LIKE) comment.likesCount--;
+    if (this.userActions[commentId] === Actions.DISLIKE) comment.dislikesCount--;
+
     if (this.userActions[commentId] === action) {
       delete this.userActions[commentId];
-      if (action === 'like') comment.likesCount--;
-      if (action === 'dislike') comment.dislikesCount--;
     } else {
-      const previousAction = this.userActions[commentId];
-      if (previousAction === 'like') comment.likesCount--;
-      if (previousAction === 'dislike') comment.dislikesCount--;
-
       this.userActions[commentId] = action;
-      if (action === 'like') comment.likesCount++;
-      if (action === 'dislike') comment.dislikesCount++;
+      if (action === Actions.LIKE) comment.likesCount++;
+      if (action === Actions.DISLIKE) comment.dislikesCount++;
     }
   }
 
@@ -140,4 +131,3 @@ export class CommentsComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 }
-
