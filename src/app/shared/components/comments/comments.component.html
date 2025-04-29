@@ -10,9 +10,9 @@
     </div>
     <div class="article-comments-item-comment">{{comment.text}}</div>
     <div class="article-comments-item-grade">
-        <div class="article-comments-item-like" [class.active]="hasUserAction(comment.id, actionTypes.LIKE)">
+        <div class="article-comments-item-like" [class.active]="userActions[comment.id] === actionTypes.LIKE">
             {{comment.likesCount}}</div>
-        <div class="article-comments-item-like-svg" [class.active]="hasUserAction(comment.id, actionTypes.LIKE)"
+        <div class="article-comments-item-like-svg" [class.active]="userActions[comment.id] === actionTypes.LIKE"
             (click)="applyAction(comment.id, actionTypes.LIKE)">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -24,9 +24,9 @@
             </svg>
 
         </div>
-        <div class="article-comments-item-like" [class.active]="hasUserAction(comment.id, actionTypes.DISLIKE)">
+        <div class="article-comments-item-like" [class.active]="userActions[comment.id] === actionTypes.DISLIKE">
             {{comment.dislikesCount}}</div>
-        <div class="article-comments-item-Slike-svg" [class.active]="hasUserAction(comment.id, actionTypes.DISLIKE)"
+        <div class="article-comments-item-Slike-svg" [class.active]="userActions[comment.id] ===  actionTypes.DISLIKE"
             (click)="applyAction(comment.id, actionTypes.DISLIKE)">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path

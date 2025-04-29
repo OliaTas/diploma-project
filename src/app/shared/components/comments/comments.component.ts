@@ -35,8 +35,10 @@ export class CommentsComponent implements OnInit, OnDestroy {
   }
 
   private loadUserActions(): void {
+    if (!this.articleId) return;
+
     this.subscription.add(
-      this.actionsService.getArticleCommentActions(this.articleId!)
+      this.actionsService.getArticleCommentActions(this.articleId)
         .subscribe({
           next: (actions: ActionType[]) => {
             actions.forEach(action => {
@@ -50,9 +52,51 @@ export class CommentsComponent implements OnInit, OnDestroy {
     );
   }
 
-  hasUserAction(commentId: string, actionType: Actions.LIKE | Actions.DISLIKE): boolean {
-    return this.userActions[commentId] === actionType;
-  }
+  // hasUserAction(commentId: string, actionType: Actions.LIKE | Actions.DISLIKE): boolean {
+  //   return this.userActions[commentId] === actionType;
+  // }
+
+  // applyAction(commentId: string, action: Actions.LIKE | Actions.DISLIKE): void {
+  //   if (!this.authService.getLoggedIn()) {
+  //     this._snackBar.open('Для выполнения действия необходимо авторизоваться');
+  //     return;
+  //   }
+
+  //   this.subscription.add(
+  //     this.actionsService.applyActionComment(commentId, action)
+  //       .subscribe({
+  //         next: (result) => {
+  //           let message = 'Ваш голос учтен';
+  //           if ((result as DefaultResponseType).error !== undefined) {
+  //             if (!(result as DefaultResponseType).error) {
+  //               this.updateCommentCounts(commentId, action);
+  //               this.subscription.add(
+  //                 this.actionsService.getCommentActions(commentId).subscribe({
+  //                   next: (actionResult) => {
+  //                     const actionForComment = actionResult.find(act => act.comment === commentId);
+  //                     if (actionForComment) {
+  //                       this.userActions[commentId] = actionForComment.action;
+  //                     } else {
+  //                       delete this.userActions[commentId];
+  //                     }
+  //                   },
+  //                   error: (error) => {
+  //                     console.error('Ошибка при получении действия для комментария', error);
+  //                   }
+  //                 })
+  //               );
+  //             } else {
+  //               message = (result as DefaultResponseType).message || 'Ошибка при выполнении действия';
+  //             }
+  //           }
+  //           this._snackBar.open(message);
+  //         },
+  //         error: () => {
+  //           this._snackBar.open('Ошибка при выполнении действия');
+  //         }
+  //       })
+  //   );
+  // }
 
   applyAction(commentId: string, action: Actions.LIKE | Actions.DISLIKE): void {
     if (!this.authService.getLoggedIn()) {
@@ -64,6 +108,23 @@ export class CommentsComponent implements OnInit, OnDestroy {
       this.actionsService.applyActionComment(commentId, action)
         .subscribe({
           next: (result) => {
+
+            this.subscription.add(
+              this.actionsService.getCommentActions(commentId).subscribe({
+                next: (actionResult) => {
+                  const actionForComment = actionResult.find(act => act.comment === commentId);
+                  if (actionForComment) {
+                    this.userActions[commentId] = actionForComment.action;
+                  } else {
+                    delete this.userActions[commentId];
+                  }
+                },
+                error: (error) => {
+                  console.error('Ошибка при получении действия для комментария', error);
+                }
+              })
+            );
+
             let message = 'Ваш голос учтен';
             if ((result as DefaultResponseType).error !== undefined) {
               if (!(result as DefaultResponseType).error) {

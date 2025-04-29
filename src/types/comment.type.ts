@@ -1,4 +1,4 @@
-import { ActionType } from "./action.type";
+import { Actions, ActionType } from "./action.type";
 
 export type CommentType = {
     allCount: number;
@@ -12,6 +12,6 @@ export type CommentType = {
         id: string;
         name: string;
       },
-      actions: ActionType,
+      actions: Actions,
     }[];
 }

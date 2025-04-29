@@ -24,7 +24,7 @@ export class ActionsService {
     );
   }
 
-  applyActionComment(commentId: string, action: Actions.LIKE | Actions.DISLIKE | Actions.VIOLATE): Observable< DefaultResponseType> {
+  applyActionComment(commentId: string, action: Actions): Observable<DefaultResponseType> {
     return this.http.post<DefaultResponseType>(
       environment.api + 'comments/' + commentId + '/apply-action',
       { action }
