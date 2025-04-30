@@ -6,6 +6,8 @@ import { Actions, ActionType } from 'src/types/action.type';
 import { DefaultResponseType } from 'src/types/default-response.type';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ArticleType } from 'src/types/article.type';
 
 @Component({
   selector: 'comments',
@@ -15,6 +17,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 
 export class CommentsComponent implements OnInit, OnDestroy {
   @Input() comments: CommentType | null = null;
+
   @Input() allCommentsCount: number = 0;
   @Input() articleId: string | null = null;
   userActions: { [commentId: string]: Actions } = {};
@@ -52,143 +55,81 @@ export class CommentsComponent implements OnInit, OnDestroy {
     );
   }
 
-  // hasUserAction(commentId: string, actionType: Actions.LIKE | Actions.DISLIKE): boolean {
-  //   return this.userActions[commentId] === actionType;
-  // }
 
-  // applyAction(commentId: string, action: Actions.LIKE | Actions.DISLIKE): void {
-  //   if (!this.authService.getLoggedIn()) {
-  //     this._snackBar.open('Для выполнения действия необходимо авторизоваться');
-  //     return;
-  //   }
+  applyAction(commentId: string, action: Actions): void {
+    this.actionsService.applyActionComment(commentId, action).subscribe({
+      next: (actionResponse: DefaultResponseType) => {
+        if (!actionResponse.error) {
+          let message = 'Ваш голос учтен';
+          if (action === Actions.VIOLATE) {
+            message = 'Жалоба отправлена';
+          } else {
+            if (this.comments && this.comments.comments) {
+              const commentIndex = this.comments.comments.findIndex((item) => item.id === commentId);
 
-  //   this.subscription.add(
-  //     this.actionsService.applyActionComment(commentId, action)
-  //       .subscribe({
-  //         next: (result) => {
-  //           let message = 'Ваш голос учтен';
-  //           if ((result as DefaultResponseType).error !== undefined) {
-  //             if (!(result as DefaultResponseType).error) {
-  //               this.updateCommentCounts(commentId, action);
-  //               this.subscription.add(
-  //                 this.actionsService.getCommentActions(commentId).subscribe({
-  //                   next: (actionResult) => {
-  //                     const actionForComment = actionResult.find(act => act.comment === commentId);
-  //                     if (actionForComment) {
-  //                       this.userActions[commentId] = actionForComment.action;
-  //                     } else {
-  //                       delete this.userActions[commentId];
-  //                     }
-  //                   },
-  //                   error: (error) => {
-  //                     console.error('Ошибка при получении действия для комментария', error);
-  //                   }
-  //                 })
-  //               );
-  //             } else {
-  //               message = (result as DefaultResponseType).message || 'Ошибка при выполнении действия';
-  //             }
-  //           }
-  //           this._snackBar.open(message);
-  //         },
-  //         error: () => {
-  //           this._snackBar.open('Ошибка при выполнении действия');
-  //         }
-  //       })
-  //   );
-  // }
+              if (commentIndex > -1) {
+                const updatedComment = this.comments.comments[commentIndex];
+                this.actionsService.getCommentActions(updatedComment.id)
+                  .subscribe((userActionsResponse) => {
+                    if (userActionsResponse.length > 0) {
+                      const userActionsForComment: Actions = userActionsResponse[0].action;
+                      if (userActionsForComment === Actions.LIKE) {
+                        updatedComment.likesCount += 1;
+                        if (updatedComment.actions !== undefined) {
+                          updatedComment.dislikesCount = (updatedComment.dislikesCount > 0)
+                            ? (updatedComment.dislikesCount - 1) : 0;
+                        }
+                      } else {
+                        updatedComment.dislikesCount += 1;
+                        if (updatedComment.actions
+                           !== undefined) {
+                          updatedComment.likesCount = (updatedComment.likesCount > 0)
+                            ? (updatedComment.likesCount - 1) : 0;
+                        }
+                      }
 
-  applyAction(commentId: string, action: Actions.LIKE | Actions.DISLIKE): void {
-    if (!this.authService.getLoggedIn()) {
-      this._snackBar.open('Для выполнения действия необходимо авторизоваться');
-      return;
-    }
+                      updatedComment.actions = userActionsForComment;
+                    } else {
+                      if (action === Actions.LIKE) {
+                        updatedComment.likesCount = (updatedComment.likesCount > 0)
+                          ? (updatedComment.likesCount - 1) : 0;
+                      } else if (action === Actions.DISLIKE) {
+                        updatedComment.dislikesCount = (updatedComment.dislikesCount > 0)
+                          ? (updatedComment.dislikesCount - 1) : 0;
+                      }
 
-    this.subscription.add(
-      this.actionsService.applyActionComment(commentId, action)
-        .subscribe({
-          next: (result) => {
+                      delete this.userActions[updatedComment.id];
+                    }
 
-            this.subscription.add(
-              this.actionsService.getCommentActions(commentId).subscribe({
-                next: (actionResult) => {
-                  const actionForComment = actionResult.find(act => act.comment === commentId);
-                  if (actionForComment) {
-                    this.userActions[commentId] = actionForComment.action;
-                  } else {
-                    delete this.userActions[commentId];
-                  }
-                },
-                error: (error) => {
-                  console.error('Ошибка при получении действия для комментария', error);
-                }
-              })
-            );
-
-            let message = 'Ваш голос учтен';
-            if ((result as DefaultResponseType).error !== undefined) {
-              if (!(result as DefaultResponseType).error) {
-                this.updateCommentCounts(commentId, action);
-              } else {
-                message = (result as DefaultResponseType).message || 'Ошибка при выполнении действия';
+                    if (this.comments && this.comments.comments) {
+                      this.comments.comments.splice(commentIndex, 1, updatedComment);
+                    }
+                  });
               }
             }
-            this._snackBar.open(message);
-          },
-          error: () => {
-            this._snackBar.open('Ошибка при выполнении действия');
           }
-        })
-    );
-  }
 
-  reportComment(commentId: string): void {
-    if (!this.authService.getLoggedIn()) {
-      this._snackBar.open('Для отправки жалобы необходимо авторизоваться');
-      return;
-    }
+          this._snackBar.open(message);
+        }
+      },
 
-    this.subscription.add(
-      this.actionsService.applyActionComment(commentId, Actions.VIOLATE)
-        .subscribe({
-          next: (result) => {
-            if ((result as DefaultResponseType).error) {
-              this._snackBar.open('Жалоба уже отправлена');
-            } else {
-              this._snackBar.open('Жалоба отправлена');
-            }
-          },
-          error: (errorResponse) => {
-            if (errorResponse.error && errorResponse.error.message === 'Это действие уже применено к комментарию') {
-              this._snackBar.open('Жалоба уже отправлена');
-            } else {
-              this._snackBar.open('Ошибка при отправке жалобы');
-            }
+      error: (errorResponse: HttpErrorResponse) => {
+        if (errorResponse.error) {
+          if (action === Actions.VIOLATE) {
+            this._snackBar.open('Жалоба уже отправлена');
+          } else if (errorResponse.error.message) {
+            this._snackBar.open(errorResponse.error.message);
+          } else {
+            this._snackBar.open('Возникла ошибка');
           }
-        })
-    );
+        }
+      }
+    });
   }
-
-  private updateCommentCounts(commentId: string, action: Actions.LIKE | Actions.DISLIKE): void {
-    if (!this.comments?.comments) return;
-
-    const comment = this.comments.comments.find(c => c.id === commentId);
-    if (!comment) return;
-
-    if (this.userActions[commentId] === Actions.LIKE) comment.likesCount--;
-    if (this.userActions[commentId] === Actions.DISLIKE) comment.dislikesCount--;
-
-    if (this.userActions[commentId] === action) {
-      delete this.userActions[commentId];
-    } else {
-      this.userActions[commentId] = action;
-      if (action === Actions.LIKE) comment.likesCount++;
-      if (action === Actions.DISLIKE) comment.dislikesCount++;
-    }
-  }
-
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
 }
+

@@ -1,4 +1,4 @@
-import { Actions, ActionType } from "./action.type";
+import { Actions} from "./action.type";
 
 export type CommentType = {
     allCount: number;
