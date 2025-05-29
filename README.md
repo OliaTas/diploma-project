@@ -1,27 +1,11 @@
-# Frontend
+### **Web Studio Website on Angular – Figma-Based Responsive Platform**  
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+This **Angular-based** web studio website is built from a **Figma design**, ensuring a modern and responsive layout that works flawlessly across all devices. The UI leverages **HTML** and **SCSS** with **Flexbox/Grid** for precise, adaptive styling.  
 
-## Development server
+Key features include:  
+- **User authentication** for secure access to personalized content.  
+- **Interactive blog** with comment functionality for user engagement.  
+- **Dynamic content sorting** (e.g., filtering posts by category or date).  
+- Smooth, touch-friendly carousels powered by **Slick Slider**.  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The project is structured with **TypeScript** for type safety and maintainability, while **Angular’s** modular architecture ensures scalability. The result is a fast, dynamic, and visually polished web studio platform.
